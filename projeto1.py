@@ -2,8 +2,6 @@ from tkinter import *
 
 def calcular_imc():
     try:
-        nome = entry_nome.get()
-        idade = entry_idade.get()
         peso = float(entry_peso.get())
         altura = float(entry_altura.get())
         imc = peso / (altura * altura)
@@ -19,10 +17,10 @@ def calcular_imc():
             classificacao, cor = "Obesidade grau 2", "darkred"
         else:
             classificacao, cor = "Obesidade grau 3", "black"
-        resultado.config(text="IMC: %.2f - %s" % (imc, classificacao), fg=cor)
-        detalhes.config(text="%s, %s anos\nPeso: %.2f kg\nAltura: %.2f m" % (nome, idade, peso, altura), fg="black")
+        resultado.config(text=f"IMC: {imc:.2f} - {classificacao}", fg=cor)
+        detalhes.config(text=f"{entry_nome.get()}, {entry_idade.get()} anos\nPeso: {peso:.2f} kg\nAltura: {altura:.2f} m", fg="black")
     except:
-        resultado.config(text="Erro: verifique os dados.", fg="red")
+        resultado.config(text="Erro: insira valores válidos.", fg="red")
         detalhes.config(text="", fg="black")
 
 def iniciar():
@@ -30,7 +28,8 @@ def iniciar():
     if nome.strip() != "":
         msg_boas_vindas.config(text=f"Olá, {nome}!")
         frame_principal.pack(pady=10)
-        entry_nome.insert(0, nome)  # Pré-preenche o campo "nome" com o nome digitado
+        entry_nome.delete(0, END)
+        entry_nome.insert(0, nome)
         frame_entrada.pack_forget()
     else:
         msg_boas_vindas.config(text="Digite um nome válido.")
@@ -70,8 +69,10 @@ entry_altura = Entry(frame_principal)
 entry_altura.pack()
 
 Button(frame_principal, text="Calcular IMC", command=calcular_imc, bg="#4CAF50", fg="white").pack(pady=10)
+
 resultado = Label(frame_principal, text="", font=("Helvetica", 12, "bold"), bg="#f0f0f0")
 resultado.pack()
+
 detalhes = Label(frame_principal, text="", bg="#f0f0f0")
 detalhes.pack()
 
