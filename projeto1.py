@@ -19,9 +19,14 @@ def calcular_imc():
             classificacao, cor = "Obesidade grau 3", "black"
         resultado.config(text=f"IMC: {imc:.2f} - {classificacao}", fg=cor)
         detalhes.config(text=f"{entry_nome.get()}, {entry_idade.get()} anos\nPeso: {peso:.2f} kg\nAltura: {altura:.2f} m", fg="black")
+
+        peso_minimo = 18.5 * (altura ** 2)
+        peso_maximo = 24.9 * (altura ** 2)
+        intervalo_ideal.config(text=f"Peso ideal: entre {peso_minimo:.1f} kg e {peso_maximo:.1f} kg", fg="black")
     except:
         resultado.config(text="Erro: insira valores válidos.", fg="red")
         detalhes.config(text="", fg="black")
+        intervalo_ideal.config(text="")
 
 def iniciar():
     nome = entrada_nome_inicial.get()
@@ -36,7 +41,7 @@ def iniciar():
 
 janela = Tk()
 janela.title("Calculadora de IMC")
-janela.geometry("300x450")
+janela.geometry("300x500")
 janela.config(bg="#f0f0f0")
 
 frame_entrada = Frame(janela, bg="#f0f0f0")
@@ -75,5 +80,8 @@ resultado.pack()
 
 detalhes = Label(frame_principal, text="", bg="#f0f0f0")
 detalhes.pack()
+
+intervalo_ideal = Label(frame_principal, text="", bg="#f0f0f0")
+intervalo_ideal.pack()
 
 janela.mainloop()
